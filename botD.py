@@ -1,3 +1,19 @@
+import http.server
+import socketserver
+import threading
+
+def run_ghost_server():
+    PORT = 10000
+    handler = http.server.SimpleHTTPRequestHandler
+    with socketserver.TCPServer(("", PORT), handler) as httpd:
+        print(f"Servidor fantasma en puerto {PORT}")
+        httpd.serve_forever()
+
+# Inicia el servidor en un hilo aparte para que no detenga tu bot
+threading.Thread(target=run_ghost_server, daemon=True).start()
+
+# --- ABAJO DE ESTO VA TODO TU CÓDIGO ORIGINAL DEL BOT ---
+
 import os
 from flask import Flask, request, render_template_string, send_file
 import telebot
